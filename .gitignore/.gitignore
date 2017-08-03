@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+__pycache__
 *.py[cod]
 *$py.class
 
@@ -7,6 +8,11 @@ __pycache__/
 *.so
 
 /Lib
+/src/__pycache__
+/src/checkers/__pycache__
+src/generators/__pycache__
+src/solver/__pycache__
+src/utils/__pycache__
 /Scripts
 /Include
 /.idea
