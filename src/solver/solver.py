@@ -51,7 +51,7 @@ def SudoSolveIt1(A,C,n):
             return A2
 
 
-def SudoSolveIt2(A,C,n):
+def SudoSolveIt2(A,C,n):    #Fastest Solver
     Arec = A
     Crec = C
     if n==1:
@@ -92,7 +92,7 @@ def SudoSolveIt2(A,C,n):
         return A2
 
 
-def SudoBruteSolve(A,n):
+def SudoBruteSolve(A,n):    #Brute Force solver
     if (SC.IsSudoRight(A)):
         return A
     Arec=deepcopy(A)
