@@ -94,7 +94,7 @@ def RandGenerator3(A,Known,n,Abeg):   #Simulated Annealing
             return Arec
         #print("hi")
         if (lenPos<27):
-            p=(lenPos)/(81*2.2)
+            p=(lenPos)/(81*2)
             x=np.random.uniform(0.0,1.0)
             if (x<=p):
                 for i in range(2):
