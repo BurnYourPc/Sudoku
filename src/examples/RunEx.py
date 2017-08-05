@@ -18,28 +18,15 @@ B2=np.array([[0,0,0,0,9,0,7,0,8],[0,0,0,8,0,0,0,0,0],[5,1,0,6,0,7,0,0,0],[0,0,9,
 #A2=SL.SudoSolveIt2(B2,[],1)
 
 #Creating NonSymmetrical Problem with 23 known numbers
-#matrix=Gen.RandGenerator3([],27,1,[])
+#matrix=Gen.RandGenerator3([],23,1,[])
 #BS.CreateSudoImg(matrix,False)
 
-#matrix=Gen.RandGenerator3([],28,1,[])
-#BS.CreateSudoImg(matrix,False)
+matrix=Gen.RandGenerator3([],23,1,[])
+BS.CreateSudoImg(matrix,False,"/fuul_path_to(image.pdf)/src/burnImage","/full_path_to_destination_folder")
 
-matrix=Gen.RandGenerator3([],17,1,[])
-BS.CreateSudoImg(matrix,False,"/home/tolis/Code-All/BurnYourPc/Sudoku/src/burnImage","/home/tolis/Code-All/BurnYourPc/Sudoku/SudoProblems/NonSymmetrical")
-
-#Creating Symmetrical Problems (symemetry is a naumber from 1 to 15, but 1-11 is efficient)
+#Creating Symmetrical Problems (symemetry is a number from 1 to 15, but 1-11 is efficient)
 #matrix=Gen.GenSymmetrical(5)
 #BS.CreateSudoImg(matrix,True)
 #matrix=Gen.GenSymmetrical(2)
-#BS.CreateSudoImg(matrix,True,"/home/tolis/Code-All/BurnYourPc/Sudoku/src/burnImage","/home/tolis/Code-All/BurnYourPc/Sudoku/SudoProblems/Symmetrical")
-#BS.CreateSudoPdf(32,'/home/tolis/Code-All/BurnYourPc/Sudoku/SudoProblems/NonSymmetrical',False,'/home/tolis/Code-All/BurnYourPc/Sudoku/src/examples','/home/tolis/Code-All/BurnYourPc/Sudoku/SudoProblems/SudoPdf')
-#os.remove(os.path.join('/home/tolis/Code-All/BurnYourPc/Sudoku', 'output1.pdf'))
-# Creating an object where pdf pages are appended to
-#output = PdfFileWriter()
+#BS.CreateSudoPdf(32,'/full_path_to_problems_png',False_for_nonSym_Tru_for_Sym,'/full_path_to/src/examples','/full_path_to_destination_folder_for_pdf')
 
-# Appending two pdf-pages from two different files
-#BS.append_pdf(PdfFileReader(open("output1.pdf","rb")),output)
-#BS.append_pdf(PdfFileReader(open("output2.pdf","rb")),output)
-
-# Writing all the collected pages to a file
-#output.write(open("CombinedPages.pdf","wb"))
