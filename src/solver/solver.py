@@ -11,15 +11,26 @@ def SudoSolveIt(A,C,n):
     else:
         if np.min(A)>0:
             return A
+        C, t2 = SV.SwordFishEr(C)
+        if(t2):
+            print("done")
         A, C, DidIn = SV.SudoInput1(A,C)
         A, C, DidIn = SV.SudoInput2(A,C)
+        C, t2 = SV.SwordFishEr(C)
+        #C, t = SV.XWingEr(C)
         #print(C)
+        
         C, t = SV.CandLineEr(C)
+        #C, t = SV.XWingEr(C)
         C, t = SV.multLineEr(C)
-        C, t = SV.nakedPairEr(C)
-        C, t = SV.nakedTuplesEr(C)
+        #C, t2 = SV.SwordFishEr(C)
+        #C, t = SV.nakedPairEr(C)
+        #C, t = SV.nakedTuplesEr(C)
         C, t = SV.hiddenPairEr(C)
-        if(t):
+        #C, t = SV.hiddenTupleEr(C)
+        #C, t2 = SV.SwordFishEr(C)
+        
+        if(t2):
             print("done")
         
         return SudoSolveIt(A,C,2)

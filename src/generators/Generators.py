@@ -7,6 +7,12 @@ from src.solver import solver as SL
 from random import randint
 
 
+def GenerateProb(lb,ub):
+    Known = randint(lb,ub)
+    print(Known)
+    return RandGenerator3([],Known,1,[])
+
+
 def RandGenerator(A,Known,n):
     Arec=deepcopy(A)
     if (n==1):
@@ -86,10 +92,10 @@ def RandGenerator3(A,Known,n,Abeg):   #Simulated Annealing
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
         return RandGenerator3(Arec,Known,2,Arec)
     else:
-        print(Arec)
+        #print(Arec)
         pos2erase=np.array(np.where(Arec!=0))
         lenPos=pos2erase[0,:].size
-        print(lenPos)
+        #print(lenPos)
         if (lenPos==Known):
             return Arec
         #print("hi")

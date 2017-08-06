@@ -208,7 +208,7 @@ def multLineEr(C):    #Determine Medium  (4)
 
 
 #-------------------------------------------------------
-def nakedPairEr(C):       # Determine Difficult   (5)
+def nakedPairEr(C):       # Determine Hard   (5)
     nrows=C.shape[0]
     #print(C)
     t=False
@@ -258,7 +258,7 @@ def nakedPairEr(C):       # Determine Difficult   (5)
 
 
 #-------------------------------------------------------
-def nakedTuplesEr(C):         #Determine Difficult (6)
+def nakedTuplesEr(C):         #Determine Hard (6)
     t=False
     nrows=C.shape[0]
     for i in range(9):
@@ -383,7 +383,7 @@ def nakedTuplesEr(C):         #Determine Difficult (6)
 
 
 #-------------------------------------------------------
-def hiddenPairEr(C):       #Determine difficult (7)
+def hiddenPairEr(C):       #Determine Hard (7)
     t=False
     for i in range(9):
         cells=C[C[:,9]==i,:]
@@ -484,12 +484,491 @@ def hiddenPairEr(C):       #Determine difficult (7)
 
 
 #-----------------------------------------------------------
-def hiddenTupleEr(C):       #Determine difficult (8)
+def hiddenTupleEr(C):       #Determine Hard (8)
     t=False
+    for i in range(9):
+        cells=C[C[:,9]==i,:]
+        for j in range(9):
+            b1=cells[:,j]
+            rc=[]
+            if(b1[np.nonzero(b1)].size==3):
+                c=cells[b1!=0,0:9]
+                for k in range(b1.size):
+                    if (b1[k]!=0):
+                        rc.append(k)
+                for k in range(9):
+                    if (k!=j):
+                        b2=cells[:,k]
+                        if(b2[np.nonzero(b2)].size==2 or b2[np.nonzero(b2)].size==3):
+                            posible=True
+                            for l in range(b2.size):
+                                if (b2[l]!=0):
+                                    if l not in rc:
+                                        posible=False
+                            if (posible):
+                                for l in xrange(k+1,9,1):
+                                    if (l!=j):
+                                        b3=cells[:,l]
+                                        if(b3[np.nonzero(b3)].size==2 or b3[np.nonzero(b3)].size==3):
+                                            posible=True
+                                            for n in range(b3.size):
+                                                if (b3[n]!=0):
+                                                    if n not in rc:
+                                                        posible=False
+                                            if (posible):
+                                                for n in range(9):
+                                                    if (n!=j and n!=k and n!=l):
+                                                        if (cells[rc[0],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[0],n)
+                                                            t=True
+                                                            cells[rc[0],n]=0
+                                                        if (cells[rc[1],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[1],n)
+                                                            t=True
+                                                            cells[rc[1],n]=0
+                                                        if (cells[rc[2],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[2],n)
+                                                            t=True
+                                                            cells[rc[2],n]=0
+        C[C[:,9]==i,:]=cells
     
+    for i in range(9):
+        cells=C[C[:,10]==i,:]
+        for j in range(9):
+            b1=cells[:,j]
+            rc=[]
+            if(b1[np.nonzero(b1)].size==3):
+                c=cells[b1!=0,0:9]
+                for k in range(b1.size):
+                    if (b1[k]!=0):
+                        rc.append(k)
+                for k in range(9):
+                    if (k!=j):
+                        b2=cells[:,k]
+                        if(b2[np.nonzero(b2)].size==2 or b2[np.nonzero(b2)].size==3):
+                            posible=True
+                            for l in range(b2.size):
+                                if (b2[l]!=0):
+                                    if l not in rc:
+                                        posible=False
+                            if (posible):
+                                for l in xrange(k+1,9,1):
+                                    if (l!=j):
+                                        b3=cells[:,l]
+                                        if(b3[np.nonzero(b3)].size==2 or b3[np.nonzero(b3)].size==3):
+                                            posible=True
+                                            for n in range(b3.size):
+                                                if (b3[n]!=0):
+                                                    if n not in rc:
+                                                        posible=False
+                                            if (posible):
+                                                for n in range(9):
+                                                    if (n!=j and n!=k and n!=l):
+                                                        if (cells[rc[0],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[0],n)
+                                                            t=True
+                                                            cells[rc[0],n]=0
+                                                        if (cells[rc[1],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[1],n)
+                                                            t=True
+                                                            cells[rc[1],n]=0
+                                                        if (cells[rc[2],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[2],n)
+                                                            t=True
+                                                            cells[rc[2],n]=0
+        C[C[:,10]==i,:]=cells
+    
+    for i in range(9):
+        cells=C[C[:,11]==i+1,:]
+        for j in range(9):
+            b1=cells[:,j]
+            rc=[]
+            if(b1[np.nonzero(b1)].size==3):
+                c=cells[b1!=0,0:9]
+                for k in range(b1.size):
+                    if (b1[k]!=0):
+                        rc.append(k)
+                for k in range(9):
+                    if (k!=j):
+                        b2=cells[:,k]
+                        if(b2[np.nonzero(b2)].size==2 or b2[np.nonzero(b2)].size==3):
+                            posible=True
+                            for l in range(b2.size):
+                                if (b2[l]!=0):
+                                    if l not in rc:
+                                        posible=False
+                            if (posible):
+                                for l in xrange(k+1,9,1):
+                                    if (l!=j):
+                                        b3=cells[:,l]
+                                        if(b3[np.nonzero(b3)].size==2 or b3[np.nonzero(b3)].size==3):
+                                            posible=True
+                                            for n in range(b3.size):
+                                                if (b3[n]!=0):
+                                                    if n not in rc:
+                                                        posible=False
+                                            if (posible):
+                                                for n in range(9):
+                                                    if (n!=j and n!=k and n!=l):
+                                                        if (cells[rc[0],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[0],n)
+                                                            t=True
+                                                            cells[rc[0],n]=0
+                                                        if (cells[rc[1],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[1],n)
+                                                            t=True
+                                                            cells[rc[1],n]=0
+                                                        if (cells[rc[2],n]!=0):
+                                                            #print(cells)
+                                                            #print(j+1,k+1,l+1)
+                                                            #print(c)
+                                                            #print(rc[2],n)
+                                                            t=True
+                                                            cells[rc[2],n]=0
+        C[C[:,11]==i+1,:]=cells
     
     
     return C,t
+#-----------------------------------------------------------
+
+
+#-----------------------------------------------------------
+def XWingEr(C):                 #Determine very Hard (9)
+    t=False
+    for j in range(9):
+        XWing=False
+        for i in range(9):
+            if (XWing):
+                break
+            cells1=C[C[:,10]==i,:]
+            nrc1=cells1.shape[0]
+            if (nrc1==12):
+                continue
+            b1=cells1[:,j]
+            rc1=[]
+            if(b1[np.nonzero(b1)].size==2):
+                c=cells1[b1!=0,:]
+                rc1.append(c[0,9])
+                rc1.append(c[1,9])
+                for k in xrange(i+1,9,1):
+                    if (XWing):
+                        break
+                    cells2=C[C[:,10]==k,:]
+                    nrc2=cells2.shape[0]
+                    if (nrc2==12):
+                        continue
+                    b2=cells2[:,j]
+                    rc2=[]
+                    if(b2[np.nonzero(b2)].size==2):
+                        c2=cells2[b2!=0,:]
+                        rc2.append(c2[0,9])
+                        rc2.append(c2[1,9])
+                        if ( (rc1[0]==rc2[0] and rc1[1]==rc2[1]) or (rc1[0]==rc2[1] and rc1[1]==rc2[0]) ):
+                            XWing=True
+                            cells3=C[C[:,9]==rc1[0],:]
+                            cells4=C[C[:,9]==rc1[1],:]
+                            nrc3=cells3.shape[0]
+                            nrc4=cells4.shape[0]
+                            for l in range(nrc1):
+                                if (cells1[l,j]!=0 and (cells1[l,9]!=rc1[0] and cells1[l,9]!=rc1[1])):
+                                    print("Wrong in XWing! cells1")
+                                    #print(cells1)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells1[l,j]=0
+                                    t=True
+                            for l in range(nrc2):
+                                if (cells2[l,j]!=0 and (cells2[l,9]!=rc2[0] and cells2[l,9]!=rc2[1])):
+                                    print("Wrong in XWing! cells2")
+                                    #print(cells2)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells2[l,j]=0
+                                    t=True
+                            for l in range(nrc3):
+                                if (cells3[l,j]!=0 and (cells3[l,10]!=i and cells3[l,10]!=k)):
+                                    #print("cells3")
+                                    #print(cells3)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(l,j)
+                                    #print(A)
+                                    cells3[l,j]=0
+                                    t=True
+                            for l in range(nrc4):
+                                if (cells4[l,j]!=0 and (cells4[l,10]!=i and cells4[l,10]!=k)):
+                                    #print("cells4")
+                                    #print(cells4)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells4[l,j]=0
+                                    t=True
+                            C[C[:,9]==rc1[0],:]=cells3
+                            C[C[:,9]==rc1[1],:]=cells4
+                    C[C[:,10]==k,:]=cells2
+            C[C[:,10]==i,:]=cells1
+    
+    for j in range(9):
+        XWing=False
+        for i in range(9):
+            if (XWing):
+                break
+            cells1=C[C[:,9]==i,:]
+            nrc1=cells1.shape[0]
+            if (nrc1==12):
+               continue
+            b1=cells1[:,j]
+            rc1=[]
+            if(b1[np.nonzero(b1)].size==2):
+                c=cells1[b1!=0,:]
+                rc1.append(c[0,10])
+                rc1.append(c[1,10])
+                for k in xrange(i+1,9,1):
+                    if (XWing):
+                        break
+                    cells2=C[C[:,9]==k,:]
+                    nrc2=cells2.shape[0]
+                    if (nrc2==12):
+                        continue
+                    b2=cells2[:,j]
+                    rc2=[]
+                    if(b2[np.nonzero(b2)].size==2):
+                        c2=cells2[b2!=0,:]
+                        rc2.append(c2[0,10])
+                        rc2.append(c2[1,10])
+                        if ( (rc1[0]==rc2[0] and rc1[1]==rc2[1]) or (rc1[0]==rc2[1] and rc1[1]==rc2[0]) ):
+                            XWing=True
+                            cells3=C[C[:,10]==rc1[0],:]
+                            cells4=C[C[:,10]==rc1[1],:]
+                            nrc3=cells3.shape[0]
+                            nrc4=cells4.shape[0]
+                            for l in range(nrc1):
+                                if (cells1[l,j]!=0 and (cells1[l,10]!=rc1[0] and cells1[l,10]!=rc1[1])):
+                                    print("Wrong in XWing! cells1")
+                                    #print(cells1)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells1[l,j]=0
+                                    t=True
+                            for l in range(nrc2):
+                                if (cells2[l,j]!=0 and (cells2[l,10]!=rc2[0] and cells2[l,10]!=rc2[1])):
+                                    print("Wrong in XWing! cells2")
+                                    #print(cells2)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells2[l,j]=0
+                                    t=True
+                            for l in range(nrc3):
+                                if (cells3[l,j]!=0 and (cells3[l,9]!=i and cells3[l,9]!=k)):
+                                    #print("cells3")
+                                    #print(cells3)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(l,j)
+                                    #print(A)
+                                    cells3[l,j]=0
+                                    t=True
+                            for l in range(nrc4):
+                                if (cells4[l,j]!=0 and (cells4[l,9]!=i and cells4[l,9]!=k)):
+                                    #print("cells4")
+                                    #print(cells4)
+                                    #print(i,k)
+                                    #print(rc1[0],rc1[1])
+                                    #print(j)
+                                    #print(A)
+                                    cells4[l,j]=0
+                                    t=True
+                            C[C[:,10]==rc1[0],:]=cells3
+                            C[C[:,10]==rc1[1],:]=cells4
+                    C[C[:,9]==k,:]=cells2
+            C[C[:,9]==i,:]=cells1
+    
+    #print(t)
+    return C, t
+#----------------------------------------------------------
+
+
+#----------------------------------------------------------
+def SwordFishEr(C):    #Determine very Hard (10)
+    t=False
+    nrows=C.shape[0]
+    for j in range(9):
+        swfish=False
+        for i in range(9):
+            if (swfish):
+                break
+            cells1=C[C[:,9]==i,:]
+            b1=cells1[:,j]
+            cols1=[]
+            path=np.arange(2)
+            if(b1[np.nonzero(b1)].size==2):
+                c1=cells1[b1!=0,:]
+                path=np.vstack([path,c1[0,9:11]])
+                path=np.vstack([path,c1[1,9:11]])
+                path=np.delete(path,0,0)
+                cols1.append(c1[0,10])
+                cols1.append(c1[1,10])
+                for k in xrange(i+1,9,1):
+                    if (swfish):
+                        break
+                    cells2=C[C[:,9]==k,:]
+                    b2=cells2[:,j]
+                    cols2=[]
+                    if(b2[np.nonzero(b2)].size==2):
+                        c2=cells2[b2!=0,:]
+                        path=np.vstack([path,c2[0,9:11]])
+                        path=np.vstack([path,c2[1,9:11]])
+                        cols2.append(c2[0,10])
+                        cols2.append(c2[1,10])
+                        for l in xrange(k+1,9,1):
+                            if (swfish):
+                                break
+                            cells3=C[C[:,9]==l,:]
+                            b3=cells3[:,j]
+                            cols3=[]
+                            if(b3[np.nonzero(b3)].size==2):
+                                c3=cells3[b3!=0,:]
+                                #print(c3)
+                                path=np.vstack([path,c3[0,9:11]])
+                                path=np.vstack([path,c3[1,9:11]])
+                                cols3.append(c3[0,10])
+                                cols3.append(c3[1,10])
+                                rows, cols, isP=isPath(path)
+                                if (isP):
+                                    for n in range(nrows):
+                                        if ( (C[n,10] in cols) and (C[n,9] not in rows) ):
+                                            if (C[n,j]!=0):
+                                                #print(path)
+                                                #print(rows)
+                                                #print(cols)
+                                                #print(n,j)
+                                                t=True
+                                                swfish=True
+                                                C[n,j]=0
+                                                
+    for j in range(9):
+        swfish=False
+        for i in range(9):
+            if (swfish):
+                break
+            cells1=C[C[:,10]==i,:]
+            b1=cells1[:,j]
+            rows1=[]
+            path=np.arange(2)
+            if(b1[np.nonzero(b1)].size==2):
+                c1=cells1[b1!=0,:]
+                path=np.vstack([path,c1[0,9:11]])
+                path=np.vstack([path,c1[1,9:11]])
+                path=np.delete(path,0,0)
+                rows1.append(c1[0,9])
+                rows1.append(c1[1,9])
+                for k in xrange(i+1,9,1):
+                    if (swfish):
+                        break
+                    cells2=C[C[:,10]==k,:]
+                    b2=cells2[:,j]
+                    rows2=[]
+                    if(b2[np.nonzero(b2)].size==2):
+                        c2=cells2[b2!=0,:]
+                        path=np.vstack([path,c2[0,9:11]])
+                        path=np.vstack([path,c2[1,9:11]])
+                        rows2.append(c2[0,9])
+                        rows2.append(c2[1,9])
+                        for l in xrange(k+1,9,1):
+                            if (swfish):
+                                break
+                            cells3=C[C[:,10]==l,:]
+                            b3=cells3[:,j]
+                            rows3=[]
+                            if(b3[np.nonzero(b3)].size==2):
+                                c3=cells3[b3!=0,:]
+                                #print(c3)
+                                path=np.vstack([path,c3[0,9:11]])
+                                path=np.vstack([path,c3[1,9:11]])
+                                rows3.append(c3[0,10])
+                                rows3.append(c3[1,10])
+                                rows, cols, isP=isPath(path)
+                                if (isP):
+                                    for n in range(nrows):
+                                        if ( (C[n,9] in rows) and (C[n,10] not in cols) ):
+                                            if (C[n,j]!=0):
+                                                print(path)
+                                                print(rows)
+                                                print(cols)
+                                                print(n,j)
+                                                print(C)
+                                                t=True
+                                                swfish=True
+                                                C[n,j]=0
+    
+    return C, t
+
+
+def isPath(path):
+    isP=True
+    cols=[]
+    rows=[]
+    for col in range(2):
+        elems=np.unique(path[:,col])
+        if (elems.size!=3):
+            IsP=False
+            return rows, cols ,isP
+        else:
+            for i in range(6):
+                sum=1
+                elem=path[i,col]
+                for row in range(6):
+                    if (row!=i):
+                        if (path[row,col]==elem):
+                            sum=sum+1
+                if (sum!=2):
+                    isP=False
+                    return rows, cols ,isP
+        if (col==0):
+            for i in range(3):
+                rows.append(elems[i])
+        else:
+            for i in range(3):
+                cols.append(elems[i])
+    
+    return rows, cols ,isP
+#----------------------------------------------------------
 
 
 def clearC(C,row,col,nbox,num):
