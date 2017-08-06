@@ -13,8 +13,15 @@ def SudoSolveIt(A,C,n):
             return A
         A, C, DidIn = SV.SudoInput1(A,C)
         A, C, DidIn = SV.SudoInput2(A,C)
-        #print(A)
         #print(C)
+        C, t = SV.CandLineEr(C)
+        C, t = SV.multLineEr(C)
+        C, t = SV.nakedPairEr(C)
+        C, t = SV.nakedTuplesEr(C)
+        C, t = SV.hiddenPairEr(C)
+        if(t):
+            print("done")
+        
         return SudoSolveIt(A,C,2)
 
 
