@@ -7,7 +7,9 @@ from src.solver import solver as SL
 from random import randint
 
 
-def GenerateProb(lb,ub):
+def GenerateProb(lb,ub,sym):
+    if sym>0:
+        return GenSymmetrical(sym)
     Known = randint(lb,ub)
     print(Known)
     return RandGenerator3([],Known,1,[])

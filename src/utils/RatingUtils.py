@@ -64,7 +64,7 @@ def isHard(A):
         C, er6 = SV.nakedTuplesEr(C)
         C, er7 = SV.hiddenPairEr(C)
         C, er8 = SV.hiddenTupleEr(C)
-        if( (not DidIn1) and (not DidIn2) and (not er3) and (not er4) and (not er5) and (not er6) and (not er7) and (not er8) ):
+        if( (not DidIn1) and (not DidIn2) and (not er3) and (not er4) and (not er5) and (not er6)):# and (not er7) and (not er8) ):
             return False
 
 

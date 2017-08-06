@@ -715,7 +715,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,10]!=i and cells3[l,10]!=k)):
-                                    #print("cells3")
+                                    print("cells3")
                                     #print(cells3)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -726,7 +726,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,10]!=i and cells4[l,10]!=k)):
-                                    #print("cells4")
+                                    print("cells4")
                                     #print(cells4)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -795,7 +795,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,9]!=i and cells3[l,9]!=k)):
-                                    #print("cells3")
+                                    print("cells3")
                                     #print(cells3)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -806,7 +806,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,9]!=i and cells4[l,9]!=k)):
-                                    #print("cells4")
+                                    print("cells4")
                                     #print(cells4)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -874,7 +874,7 @@ def SwordFishEr(C):    #Determine very Hard (10)
                                     for n in range(nrows):
                                         if ( (C[n,10] in cols) and (C[n,9] not in rows) ):
                                             if (C[n,j]!=0):
-                                                #print(path)
+                                                print(path)
                                                 #print(rows)
                                                 #print(cols)
                                                 #print(n,j)
@@ -929,10 +929,10 @@ def SwordFishEr(C):    #Determine very Hard (10)
                                         if ( (C[n,9] in rows) and (C[n,10] not in cols) ):
                                             if (C[n,j]!=0):
                                                 print(path)
-                                                print(rows)
-                                                print(cols)
-                                                print(n,j)
-                                                print(C)
+                                                #print(rows)
+                                                #print(cols)
+                                                #print(n,j)
+                                                #print(C)
                                                 t=True
                                                 swfish=True
                                                 C[n,j]=0

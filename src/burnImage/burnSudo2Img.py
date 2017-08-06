@@ -13,10 +13,10 @@ from random import randint
 import shutil
 
 
-def CreateSudoImg(A,sym,source,destination):   #Adds new Sudoku problem as png image to the desirable folder
+def CreateSudoImg(A,sourceimg,destination):   #Adds new Sudoku problem as png image to the desirable folder
     font = ImageFont.truetype("/usr/share/fonts/dejavu/DejaVuSans.ttf", 18)
     #img=Image.open("/home/tolis/Code-All/BurnYourPc/Sudoku/src/burnImage/image.png")
-    img=Image.open(source+"/image.png")
+    img=Image.open(sourceimg+"/image.png")
     draw = ImageDraw.Draw(img)
     for i in range(9):
         for j in range(9):
@@ -27,16 +27,16 @@ def CreateSudoImg(A,sym,source,destination):   #Adds new Sudoku problem as png i
     file_list = os.listdir(destination)
     file_count = len(file_list)+1
     
-    if (sym):
-        if (file_count>9):
-            imgname="/SymProb"+str(file_count)+".png"
-        else:
-            imgname="/SymProb"+str(0)+str(file_count)+".png"
+    #if (sym):
+    if (file_count>9):
+        imgname="/Prob"+str(file_count)+".png"
     else:
-        if (file_count>9):
-            imgname="/NonSymProb"+str(file_count)+".png"
-        else:
-            imgname="/NonSymProb"+str(0)+str(file_count)+".png"
+        imgname="/Prob"+str(0)+str(file_count)+".png"
+    #else:
+    #    if (file_count>9):
+    #        imgname="/NonSymProb"+str(file_count)+".png"
+    #    else:
+    #        imgname="/NonSymProb"+str(0)+str(file_count)+".png"
     
     img.save(destination+imgname)
         
