@@ -71,10 +71,10 @@ def CreateSudoPdf(nums,pathConst,source,destination):
     probPicked5=np.arange(allmax[4])+1
     
     counter=0
-    
+
     for i in range(num):
+        
         diff=getNumDiff(i,nums)
-        diffarray.append(diff)
         diffpath=getStrPathDiff(diff)
         path=pathConst+diffpath
         file_list = os.listdir(path)
@@ -90,6 +90,9 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked1.size)
             pick=probPicked1[pickItem-1]
+            
+            diffarray.append(diff)
+            
             erase=np.array([probPicked1[pickItem-1]])
             probPicked1=np.setdiff1d(probPicked1,erase)
         elif (diff==2):
@@ -101,6 +104,9 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked2.size)
             pick=probPicked2[pickItem-1]
+            
+            diffarray.append(diff)
+            
             erase=np.array([probPicked2[pickItem-1]])
             probPicked2=np.setdiff1d(probPicked2,erase)
         elif (diff==3):
@@ -112,6 +118,7 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked3.size)
             pick=probPicked3[pickItem-1]
+            diffarray.append(diff)
             erase=np.array([probPicked3[pickItem-1]])
             probPicked3=np.setdiff1d(probPicked3,erase)
         elif (diff==4):
@@ -123,6 +130,7 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked4.size)
             pick=probPicked4[pickItem-1]
+            diffarray.append(diff)
             erase=np.array([probPicked4[pickItem-1]])
             probPicked4=np.setdiff1d(probPicked4,erase)
         else:
@@ -134,6 +142,7 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked5.size)
             pick=probPicked5[pickItem-1]
+            diffarray.append(diff)
             erase=np.array([probPicked5[pickItem-1]])
             probPicked5=np.setdiff1d(probPicked5,erase)
         
