@@ -90,9 +90,7 @@ def CreateSudoPdf(nums,pathConst,source,destination):
             counter=counter+1
             pickItem=randint(1, probPicked1.size)
             pick=probPicked1[pickItem-1]
-            
             diffarray.append(diff)
-            
             erase=np.array([probPicked1[pickItem-1]])
             probPicked1=np.setdiff1d(probPicked1,erase)
         elif (diff==2):

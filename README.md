@@ -1,4 +1,4 @@
-# Sudoku - version 1.0
+# SudoPy - version 1.0
 
 You could use our implementations in order to solve Sudoku problems, generate non-symmetrical or symmetrical Sudoku, and rate Sudoku problems.
 
@@ -24,7 +24,7 @@ Our main Generator uses a Top-Down technique with a Simulated Annealing variant 
 
 That proccess can produce efficiently sudoku problems with 25-24 known cells at most. So we added a simulated annealing technique. That is: In every step there is a possibility p(n) (n is the number of known cells and if n1 <= n2 then p(n1) <= p(n2) ) that the generator would fill 2 cells at random. So this way we can exceed the local optimums (from the point of view of grid's structure). The parametrs of the simulated annealing may take improvment.
 
-So we can generate sudoku problems with 21 known cells (or even 20 but it's slow).
+So we can generate sudoku problems even with 21 known cells (or even 20 but it's slow).
 
 In addition we implement a Bottom-up technique generator, but it's not very effective and needs a lot of improvement.
 
