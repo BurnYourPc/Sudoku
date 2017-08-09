@@ -19,11 +19,9 @@ def RateProb(A):
     Av=deepcopy(A)
     if (RU.isHard(Av)):
         return 4
-    #print(Av)
     
     Av=deepcopy(A)
     if (RU.isVeryHard(Av)):
         return 5
-    #print(Av)
     
     return 6

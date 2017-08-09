@@ -47,7 +47,7 @@ def CountSolutions(A,C,numSol,n):
         return numSol
 
 
-def makeNewSudo(A,n):
+def makeNewSudo(A,n):    #Generate a full Sudoku grid
     Arec=deepcopy(A)
     if (np.min(Arec)>0):
         return Arec
@@ -55,7 +55,6 @@ def makeNewSudo(A,n):
         for j in range(9):
             if (Arec[i,j]==0):
                 posnum=SV.FindPosNums(Arec,i,j)
-                #if (posnum.size>0)
                 while (posnum.size>0):
                     pick=randint(0, posnum.size-1)
                     Arec[i,j]=posnum[pick]
@@ -66,7 +65,7 @@ def makeNewSudo(A,n):
                 return Arec
 
 
-def giveSymMat(symmetry):
+def giveSymMat(symmetry):       #Store the symmetrical patterns
     A=np.zeros((9,9), dtype=int)
     
     if(symmetry==1):

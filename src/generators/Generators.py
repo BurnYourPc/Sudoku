@@ -11,11 +11,10 @@ def GenerateProb(lb,ub,sym):
     if sym>0:
         return GenSymmetrical(sym)
     Known = randint(lb,ub)
-    print(Known)
     return RandGenerator3([],Known,1,[])
 
 
-def RandGenerator(A,Known,n):
+def RandGenerator(A,Known,n):    #Top-down - No simulated annealing
     Arec=deepcopy(A)
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
@@ -34,7 +33,6 @@ def RandGenerator(A,Known,n):
             if (GU.CountSolutions(A3,[],0,1)==1):
                 A2=RandGenerator(A3,Known,2)
                 lenKn=np.array(np.where(A2!=0))
-                #lenKn2=lenKn[0,:].size
                 if(lenKn[0,:].size==Known):
                     return A2
             pos2erase=np.delete(pos2erase,pick,1)
@@ -43,7 +41,6 @@ def RandGenerator(A,Known,n):
 
 
 def RandGenerator2(A,Known,n):   #almost useless
-    #print("hello")
     Arec=deepcopy(A)
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
@@ -55,7 +52,6 @@ def RandGenerator2(A,Known,n):   #almost useless
         print(lenPos)
         if (lenPos==Known):
             return Arec
-        #print("hi")
         if (Known<24):
             if (lenPos==24):
                 r=randint(1, 10)
@@ -79,7 +75,6 @@ def RandGenerator2(A,Known,n):   #almost useless
             if (GU.CountSolutions(A3,[],0,1)==1):
                 A2=RandGenerator2(A3,Known,2)
                 lenKn=np.array(np.where(A2!=0))
-                #lenKn2=lenKn[0,:].size
                 if(lenKn[0,:].size==Known):
                     return A2
             pos2erase=np.delete(pos2erase,pick,1)
@@ -87,20 +82,16 @@ def RandGenerator2(A,Known,n):   #almost useless
         return Arec
 
 
-def RandGenerator3(A,Known,n,Abeg):   #Simulated Annealing
-    #print("hello")
+def RandGenerator3(A,Known,n,Abeg):   #Top-down with Simulated Annealing
     Arec=deepcopy(A)
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
         return RandGenerator3(Arec,Known,2,Arec)
     else:
-        #print(Arec)
         pos2erase=np.array(np.where(Arec!=0))
         lenPos=pos2erase[0,:].size
-        #print(lenPos)
         if (lenPos==Known):
             return Arec
-        #print("hi")
         if (lenPos<27):
             p=(lenPos)/(81*2)
             x=np.random.uniform(0.0,1.0)
@@ -119,7 +110,6 @@ def RandGenerator3(A,Known,n,Abeg):   #Simulated Annealing
             if (GU.CountSolutions(A3,[],0,1)==1):
                 A2=RandGenerator3(A3,Known,2,Abeg)
                 lenKn=np.array(np.where(A2!=0))
-                #lenKn2=lenKn[0,:].size
                 if(lenKn[0,:].size==Known):
                     return A2
             pos2erase=np.delete(pos2erase,pick,1)
@@ -127,15 +117,13 @@ def RandGenerator3(A,Known,n,Abeg):   #Simulated Annealing
         return Arec
 
 
-def RandFillGen(A,Known,n,Abeg):
+def RandFillGen(A,Known,n,Abeg):    #Bottom-up
     Arec=deepcopy(A)
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
         return RandFillGen(np.zeros((9,9), dtype=int),Known,2,Arec)
     recKnown=np.array(np.where(Arec!=0))
     lenKnown=recKnown[0,:].size
-    #if (lenKnown==Known):
-     #   return Arec
     pos2fill=np.array(np.where(Arec==0))
     lenFill=pos2fill[0,:].size
     if (lenKnown >Known-2):

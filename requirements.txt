@@ -2,3 +2,4 @@ numpy
 pypdf2
 reportlab
 PIL
+tkinter

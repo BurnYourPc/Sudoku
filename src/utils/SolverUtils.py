@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def ConstructC(A):
+def ConstructC(A):          # C is matrix. Every row corresponds to an empty cell and has 12 integers. First 9 indicate possible numbers accepted in cell and 3 later indicate [row,col,box]
     C=np.array(np.arange(12))
     for i in range(9):
         for j in range(9):
@@ -20,7 +20,7 @@ def ConstructC(A):
     return C
 
 
-def SudoInput1(A,C):
+def SudoInput1(A,C):      #Single candidate method
     t=False
     nrows=C.shape[0]
     delrows=np.array([])
@@ -37,7 +37,7 @@ def SudoInput1(A,C):
     return A, C, t
 
 
-def SudoInput2(A,C):
+def SudoInput2(A,C):       #Single position method
     t=False
     
     for i in range(9):
@@ -87,7 +87,8 @@ def SudoInput2(A,C):
 def CandLineEr(C):    #Determine Medium   (3)
     nrows=C.shape[0]
     t=False
-    
+    if (nrows==12):
+        return C, t
     for i in range(9):
         a=C[C[:,11]==i+1,:]
         for j in range(9):
@@ -153,6 +154,8 @@ def CandLineEr(C):    #Determine Medium   (3)
 def multLineEr(C):    #Determine Medium  (4)
     nrows=C.shape[0]
     t=False
+    if (nrows==12):
+        return C, t
     for i in xrange(1,8,3):     #Take every combination of two by row-contigous boxes
         for j in xrange(i,i+2,1):
             for k in xrange(j+1,i+3,1):
@@ -209,9 +212,11 @@ def multLineEr(C):    #Determine Medium  (4)
 
 #-------------------------------------------------------
 def nakedPairEr(C):       # Determine Hard   (5)
-    nrows=C.shape[0]
-    #print(C)
     t=False
+    nrows=C.shape[0]
+    if (nrows==12):
+        return C, t
+    #print(C)
     for i in range(nrows):
         a=np.unique(C[i,0:9])
         a=np.delete(a,np.array(np.where(a==0)))
@@ -264,6 +269,8 @@ def nakedTuplesEr(C):         #Determine Hard (6)
     for i in range(9):
         cells=C[C[:,9]==i,:]
         crows=cells.shape[0]
+        if (crows==12):
+                continue
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -303,6 +310,8 @@ def nakedTuplesEr(C):         #Determine Hard (6)
     for i in range(9):
         cells=C[C[:,10]==i,:]
         crows=cells.shape[0]
+        if (crows==12):
+                continue
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -342,6 +351,8 @@ def nakedTuplesEr(C):         #Determine Hard (6)
     for i in range(9):
         cells=C[C[:,11]==i+1,:]
         crows=cells.shape[0]
+        if (crows==12):
+                continue
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -715,7 +726,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,10]!=i and cells3[l,10]!=k)):
-                                    print("cells3")
+                                   # print("cells3")
                                     #print(cells3)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -726,7 +737,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,10]!=i and cells4[l,10]!=k)):
-                                    print("cells4")
+                                   # print("cells4")
                                     #print(cells4)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -795,7 +806,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,9]!=i and cells3[l,9]!=k)):
-                                    print("cells3")
+                                    #print("cells3")
                                     #print(cells3)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -806,7 +817,7 @@ def XWingEr(C):                 #Determine very Hard (9)
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,9]!=i and cells4[l,9]!=k)):
-                                    print("cells4")
+                                   # print("cells4")
                                     #print(cells4)
                                     #print(i,k)
                                     #print(rc1[0],rc1[1])
@@ -874,7 +885,7 @@ def SwordFishEr(C):    #Determine very Hard (10)
                                     for n in range(nrows):
                                         if ( (C[n,10] in cols) and (C[n,9] not in rows) ):
                                             if (C[n,j]!=0):
-                                                print(path)
+                                                #print(path)
                                                 #print(rows)
                                                 #print(cols)
                                                 #print(n,j)
@@ -928,7 +939,7 @@ def SwordFishEr(C):    #Determine very Hard (10)
                                     for n in range(nrows):
                                         if ( (C[n,9] in rows) and (C[n,10] not in cols) ):
                                             if (C[n,j]!=0):
-                                                print(path)
+                                                #print(path)
                                                 #print(rows)
                                                 #print(cols)
                                                 #print(n,j)

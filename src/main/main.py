@@ -1,7 +1,14 @@
 import os
+import numpy as np
+from copy import deepcopy
+from tkinter import *
+import tkinter.messagebox
 from src.burnImage import burnSudo2Img as BS
 from src.generators import Generators as Gen
+from src.utils import GeneratorUtils as GU
 from src.ratingSudos import rating as RT
+from src.checkers import SudoCheck as SC
+from src.solver import solver as SL
 
 
 def gen_save(num,sym,sourceimg,destination):
@@ -24,8 +31,9 @@ def gen_save(num,sym,sourceimg,destination):
     
     else:
         for i in range(num):
-            A=Gen.GenerateProb(23,34,0)
+            A=Gen.GenerateProb(24,34,0)          # 24 to 32 knokn cells
             lvl=RT.RateProb(A)
+            print(i+1)
             if (lvl==1):
                 destination2=destination+"VeryEasy"
             elif (lvl==2):
@@ -40,16 +48,118 @@ def gen_save(num,sym,sourceimg,destination):
             BS.CreateSudoImg(A,sourceimg,destination2)
 
 
+def CreatePdf(nums,sym,path):
+    if (sym==1):
+        path2=path+"SudoProblems/Symmetrical/"
+    else:
+        path2=path+"SudoProblems/NonSymmetrical/"
+    
+    source=path+"src/main"
+    destination=path+"SudoProblems/SudoPdf"
+    BS.CreateSudoPdf(nums,path2,source,destination)
+
+
+def printMes(title,text):
+    tkinter.messagebox.showinfo(title,text)
+
+
+def solvegui():
+    mw = Tk()
+    mw.title("Solve Sudoku problem")
+    rows = []
+    for i in range(9):
+        cols = []
+        for j in range(9):
+            e = Entry(relief=RIDGE,bd=5,width=3)
+            e.grid(row=i+1, column=j+1, sticky=NSEW)
+            e.insert(END, '%d' % 0)
+            cols.append(e)
+        rows.append(cols)
+    
+    def onPressSolve():
+        A=np.zeros((9,9), dtype=int)
+        i=0
+        for row in rows:
+            j=0
+            for col in row:
+                A[i,j]=int(col.get())
+                j=j+1
+            i=i+1
+        if (np.min(A)>=0 and np.max(A)<=9):
+            if (SC.IsSudoRight(A)):
+                printMes("Solver","Already Solved!")
+            else:
+                Adef=deepcopy(A)
+                if (GU.CountSolutions(Adef,[],0,1)==1):
+                    A=SL.SudoSolveIt2(A,[],1)
+                    print(A)
+                else:
+                    printMes("Solver","There isn't unique solution!")
+        else:
+            printMes("Solver","Wrong inputs!")
+    
+        mw.destroy()
+    
+    Button(text='give Sudoku', command=onPressSolve).grid()
+    mainloop()
+
+
+def rategui():
+    mw = Tk()
+    mw.title("Rate Sudoku problem")
+    rows = []
+    for i in range(9):
+        cols = []
+        for j in range(9):
+            e = Entry(relief=RIDGE,bd=5,width=3)
+            e.grid(row=i+1, column=j+1, sticky=NSEW)
+            e.insert(END, '%d' % 0)
+            cols.append(e)
+        rows.append(cols)
+    
+    def onPressRate():
+        A=np.zeros((9,9), dtype=int)
+        i=0
+        for row in rows:
+            j=0
+            for col in row:
+                A[i,j]=int(col.get())
+                j=j+1
+            i=i+1
+        if (np.min(A)>=0 and np.max(A)<=9):
+            if (SC.IsSudoRight(A)):
+                printMes("Rating","Already Solved!")
+            else:
+                Adef=deepcopy(A)
+                if (GU.CountSolutions(Adef,[],0,1)==1):
+                    diff=RT.RateProb(A)
+                    printMes("Rating","Your Problem is "+BS.getStrDiff(difficulty))
+                else:
+                    printMes("Rating","There isn't unique solution!")
+        else:
+            printMes("Rating","Wrong inputs!")
+    
+        mw.destroy()
+    
+    Button(text='give Sudoku', command=onPressRate).grid()
+    mainloop()
+
+
+#-----------------------------------------------------------------------------------#
+
+
 print("Welcome to Sudoku Project by BurnYourPc Organization!")
 print(" ")
 print("Choose what to do...")
 print("1. Generate more Sudoku problems [press -g number_of_problems]")
 print("2. Create Pdf with Sudoku problems [press -pdf]")
-print("3. exit [press exit]")
+print("3. Solve Sudoku Problem [press -solve]")
+print("4. Rate Sudoku Problem [press -rate]")
+print("5. exit [press exit]")
 choice = input()
 
 path=os.path.dirname(os.path.abspath("."))
-print(path)
+
 if choice[0:2]=="-g":
 	num=int(choice[3:len(choice)])
 	answ=input("Symmetrical[1] or NonSymmetrical[2]?\n")
@@ -66,25 +176,49 @@ if choice[0:2]=="-g":
 	    
 elif (choice[0:4]=="-pdf"):
     nums=[]
-    ve=input("How many Very Easy?")
-    nums.append(int(ve))
+    answ=input("Symmetrical[1] or NonSymmetrical[2]?\n")
+    answ=int(answ)
+	
+    if (answ!=1 and answ!=2):
+        print("Wrong Input!")
+    else:
+        ve=input("How many Very Easy?\n")
+        nums.append(int(ve))
     
-    ve=input("How many Easy?")
-    nums.append(int(ve))
+        ve=input("How many Easy?\n")
+        nums.append(int(ve))
     
-    ve=input("How many Medium?")
-    nums.append(int(ve))
+        ve=input("How many Medium?\n")
+        nums.append(int(ve))
     
-    ve=input("How many Hard?")
-    nums.append(int(ve))
+        ve=input("How many Hard?\n")
+        nums.append(int(ve))
     
-    ve=input("How many Very Hard?")
-    nums.append(int(ve))
-    
-    
-    
-    
+        ve=input("How many Very Hard?\n")
+        nums.append(int(ve))
+        print(" ")
+        
+        if (answ==1):
+            sym=1
+            
+        else:
+            sym=2
+        
+        CreatePdf(nums,sym,path[0:len(path)-3])
+        destination=path[0:len(path)-3]+"SudoProblems/SudoPdf"
+        file_list = os.listdir(destination)
+        file_count = len(file_list)
+        name="SudokuProblems"+str(file_count)+".pdf"
+        print("Your Pdf is "+name+" in SudoProblems/SudoPdf folder")
+
+elif (choice[0:6]=="-solve"):
+    solvegui()
+
+elif (choice[0:5]=="-rate"):
+    rategui()
+
 elif (choice=="exit"):
     print("Bye Bye!")
+
 else:
     print("Wrong inputs! Try again...")
