@@ -2,7 +2,9 @@
 
 You could use our implementations in order to solve Sudoku problems, generate non-symmetrical or symmetrical Sudoku, and rate Sudoku problems.
 
-Moreover you could generate a printable pdf with as many problems from each difficulty level you desire.
+Moreover you could generate a printable pdf with as many problems from each difficulty level as you desire.
+
+Every Sudoku that is generated is saved as png in the corresponding folder.
 
 We rate 5 levels of difficulty (very Easy, Easy, Medium, Hard, very Hard) and divide them inτο symmetrical and nonsymmetrical problems. 11 symmetrical patterns can be generated, but is very easy to add as many as you wish (in utils/GeneratorsUtils.py).
 
@@ -24,7 +26,7 @@ That proccess can produce efficiently sudoku problems with 25-24 known cells at 
 
 So we can generate sudoku problems with 21 known cells (or even 20 but it's slow).
 
-In addition we implement a Bottom-down technique generator, but it's not very effective and needs a lot of improvement.
+In addition we implement a Bottom-up technique generator, but it's not very effective and needs a lot of improvement.
 
 
 3. Rating Sudoku
