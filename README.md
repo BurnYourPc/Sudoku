@@ -36,4 +36,5 @@ For rating sudoku problems we follow Narendra Jussien method in his book "A to Z
 
 (a) A gui for a sudoku grid and a menu bar. 
 (b) Add generators (genetic for example), change and improve existing (speed, simulated annealing parametrs). 
-(c) Add some different raters.
+(c) Add some different raters (genetic). 
+(d) Add some more exotic solvers (hopfield neural network, integer programming).
