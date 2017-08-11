@@ -1,1 +1,4 @@
 numpy
+pypdf2
+reportlab
+tkinter

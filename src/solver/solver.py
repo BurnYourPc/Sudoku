@@ -11,10 +11,28 @@ def SudoSolveIt(A,C,n):
     else:
         if np.min(A)>0:
             return A
+        C, t2 = SV.SwordFishEr(C)
+        if(t2):
+            print("done")
         A, C, DidIn = SV.SudoInput1(A,C)
         A, C, DidIn = SV.SudoInput2(A,C)
-        #print(A)
+        C, t2 = SV.SwordFishEr(C)
+        #C, t = SV.XWingEr(C)
         #print(C)
+        
+        C, t = SV.CandLineEr(C)
+        #C, t = SV.XWingEr(C)
+        C, t = SV.multLineEr(C)
+        #C, t2 = SV.SwordFishEr(C)
+        #C, t = SV.nakedPairEr(C)
+        #C, t = SV.nakedTuplesEr(C)
+        C, t = SV.hiddenPairEr(C)
+        #C, t = SV.hiddenTupleEr(C)
+        #C, t2 = SV.SwordFishEr(C)
+        
+        if(t2):
+            print("done")
+        
         return SudoSolveIt(A,C,2)
 
 
@@ -51,7 +69,7 @@ def SudoSolveIt1(A,C,n):
             return A2
 
 
-def SudoSolveIt2(A,C,n):
+def SudoSolveIt2(A,C,n):    #Fastest Solver
     Arec = A
     Crec = C
     if n==1:
@@ -92,7 +110,7 @@ def SudoSolveIt2(A,C,n):
         return A2
 
 
-def SudoBruteSolve(A,n):
+def SudoBruteSolve(A,n):    #Brute Force solver
     if (SC.IsSudoRight(A)):
         return A
     Arec=deepcopy(A)
