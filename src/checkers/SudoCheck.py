@@ -25,7 +25,8 @@ def IsSudoRight(A):
 
 def IsDeadEnd(C):    #Given C checks if no one cell could accept a value
     t=False
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     for i in range(nrows):
         arr=C[i,0:9]
         if (arr[np.nonzero(arr)].size==0):

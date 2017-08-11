@@ -6,7 +6,7 @@ Moreover you could generate a printable pdf with as many problems from each diff
 
 Every Sudoku that is generated is saved as png in the corresponding folder.
 
-We rate 5 levels of difficulty (very Easy, Easy, Medium, Hard, very Hard) and divide them inτο symmetrical and nonsymmetrical problems. 11 symmetrical patterns can be generated, but is very easy to add as many as you wish (in utils/GeneratorsUtils.py).
+We rate 5 levels of difficulty (very Easy, Easy, Medium, Hard, very Hard) and divide them inτο symmetrical and non-symmetrical problems. 11 symmetrical patterns can be generated, but is very easy to add as many as you wish (in utils/GeneratorsUtils.py).
 
 We use pyhton 3.5.2
 
@@ -26,6 +26,12 @@ That proccess can produce efficiently sudoku problems with 25-24 known cells at 
 
 So we can generate sudoku problems even with 21 known cells (or even 20 but it's slow).
 
+Nevertheless we set time limit (15 sec.) for a sudoku problem to be generated, for better time efficient in practise. If the time limit is violated then a new full solved grid is generated and we repeat the proccess.
+
+Anyway you can use the time limitless generator if you want.
+
+We have experimentally concluded that when a sudoku is generated its level is more possible to be very Easy, then very Hard, Easy, Medium and Hard.
+
 In addition we implement a Bottom-up technique generator, but it's not very effective and needs a lot of improvement.
 
 
@@ -39,4 +45,6 @@ For rating sudoku problems we follow Narendra Jussien method in his book "A to Z
 (a) A gui for a sudoku grid and a menu bar. 
 (b) Add generators (genetic for example), change and improve existing (speed, simulated annealing parametrs). 
 (c) Add some different raters (genetic). 
-(d) Add some more exotic solvers (hopfield neural network, integer programming).
+(d) Add some more exotic solvers (hopfield neural network, integer programming). 
+(e) Add a new level (expert)
+

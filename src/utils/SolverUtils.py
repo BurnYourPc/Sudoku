@@ -22,7 +22,8 @@ def ConstructC(A):          # C is matrix. Every row corresponds to an empty cel
 
 def SudoInput1(A,C):      #Single candidate method
     t=False
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     delrows=np.array([])
     for i in range(nrows):
         row=C[i,0:9]
@@ -60,7 +61,6 @@ def SudoInput2(A,C):       #Single position method
             b=a[:,j]
             if(b[np.nonzero(b)].size==1):
                 t=True
-                #whrows.append(np.array(np.where(b!=0))[0,0])
                 whrows=np.array(np.where(b!=0))[0,0]
                 c=a[b!=0,:]
                 A[c[0,9],c[0,10]]=j+1
@@ -85,10 +85,9 @@ def SudoInput2(A,C):       #Single position method
 
 #------------------------------------------------------------
 def CandLineEr(C):    #Determine Medium   (3)
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     t=False
-    if (nrows==12):
-        return C, t
     for i in range(9):
         a=C[C[:,11]==i+1,:]
         for j in range(9):
@@ -118,14 +117,10 @@ def CandLineEr(C):    #Determine Medium   (3)
             if(b[np.nonzero(b)].size==2 or b[np.nonzero(b)].size==3):
                 c=a[b!=0,11]
                 if (np.unique(c).size==1):
-                    #t=True
                     box=c[0]
-                    #print(j+1,"col ",i)
                     for k in range(nrows):
                         if (C[k,11]==box and C[k,10]!=i):
                             if (C[k,j]!=0):
-                                #print(a)
-                                #print(k,j)
                                 t=True
                             C[k,j]=0
     
@@ -136,14 +131,10 @@ def CandLineEr(C):    #Determine Medium   (3)
             if(b[np.nonzero(b)].size==2 or b[np.nonzero(b)].size==3):
                 c=a[b!=0,11]
                 if (np.unique(c).size==1):
-                    #t=True
-                    #print(j+1,"row ",i)
                     box=c[0]
                     for k in range(nrows):
                         if (C[k,11]==box and C[k,9]!=i):
                             if (C[k,j]!=0):
-                                #print(a)
-                                #print(k,j)
                                 t=True
                             C[k,j]=0
     return C, t
@@ -152,10 +143,10 @@ def CandLineEr(C):    #Determine Medium   (3)
 
 #-------------------------------------------------------
 def multLineEr(C):    #Determine Medium  (4)
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     t=False
-    if (nrows==12):
-        return C, t
+    
     for i in xrange(1,8,3):     #Take every combination of two by row-contigous boxes
         for j in xrange(i,i+2,1):
             for k in xrange(j+1,i+3,1):
@@ -194,13 +185,9 @@ def multLineEr(C):    #Determine Medium  (4)
                     for l in range(9):
                         b=a[:,l]
                         c=a[b!=0,10:12]
-                        #print(c)
                         if (np.unique(c[:,0]).size==2 and np.unique(c[:,1]).size==2):
                             thirdBox=getThirdBox(i,j,k,2)
                             cols=np.unique(c[:,0])
-                            #print(c[:,0])
-                            #print(np.unique(c[0,:]))
-                            #print(cols)
                             for n in range(nrows):
                                 if (C[n,11]==thirdBox and (C[n,10]==cols[0] or C[n,10]==cols[1])):
                                     if (C[n,l]!=0):
@@ -213,24 +200,20 @@ def multLineEr(C):    #Determine Medium  (4)
 #-------------------------------------------------------
 def nakedPairEr(C):       # Determine Hard   (5)
     t=False
-    nrows=C.shape[0]
-    if (nrows==12):
-        return C, t
-    #print(C)
+    nrows=C.shape
+    nrows=nrows[0]
+    
     for i in range(nrows):
         a=np.unique(C[i,0:9])
         a=np.delete(a,np.array(np.where(a==0)))
         if (a.size==2):
             cell=C[i,0:9]
-            #print(C[i,:])
-            #print(cell)
             nums=a
             row=C[i,9]
             col=C[i,10]
             box=C[i,11]
             for j in range(nrows):
                 if (np.array_equal(cell,C[j,0:9]) and j!=i):
-                    #print(C[j,:])
                     if (C[j,9]==row):
                         for k in range(nrows):
                             if (C[k,9]==row and j!=k and i!=k):
@@ -265,12 +248,13 @@ def nakedPairEr(C):       # Determine Hard   (5)
 #-------------------------------------------------------
 def nakedTuplesEr(C):         #Determine Hard (6)
     t=False
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
+    
     for i in range(9):
         cells=C[C[:,9]==i,:]
-        crows=cells.shape[0]
-        if (crows==12):
-                continue
+        crows=cells.shape
+        crows=crows[0]
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -288,30 +272,20 @@ def nakedTuplesEr(C):         #Determine Hard (6)
                                 for n in range(crows):
                                     if (n!=j and n!=k and n!=l):
                                         if (cells[n,u2[0]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[0]-1]=0
                                         if (cells[n,u2[1]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[1]-1]=0
                                         if (cells[n,u2[2]-1]!=0):
-                                            #print(cells)
-                                            #rint(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[2]-1]=0
         C[C[:,9]==i,:]=cells
             
     for i in range(9):
         cells=C[C[:,10]==i,:]
-        crows=cells.shape[0]
-        if (crows==12):
-                continue
+        crows=cells.shape
+        crows=crows[0]
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -329,30 +303,20 @@ def nakedTuplesEr(C):         #Determine Hard (6)
                                 for n in range(crows):
                                     if (n!=j and n!=k and n!=l):
                                         if (cells[n,u2[0]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[0]-1]=0
                                         if (cells[n,u2[1]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[1]-1]=0
                                         if (cells[n,u2[2]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[2]-1]=0
         C[C[:,10]==i,:]=cells
         
     for i in range(9):
         cells=C[C[:,11]==i+1,:]
-        crows=cells.shape[0]
-        if (crows==12):
-                continue
+        crows=cells.shape
+        crows=crows[0]
         for j in range(crows):
             a1=np.unique(cells[j,0:9])
             a1=np.delete(a1,np.array(np.where(a1==0)))
@@ -370,21 +334,12 @@ def nakedTuplesEr(C):         #Determine Hard (6)
                                 for n in range(crows):
                                     if (n!=j and n!=k and n!=l):
                                         if (cells[n,u2[0]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[0]-1]=0
                                         if (cells[n,u2[1]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[1]-1]=0
                                         if (cells[n,u2[2]-1]!=0):
-                                            #print(cells)
-                                            #print(u2)
-                                            #print(n)
                                             t=True
                                             cells[n,u2[2]-1]=0
         C[C[:,11]==i+1,:]=cells
@@ -414,15 +369,9 @@ def hiddenPairEr(C):       #Determine Hard (7)
                             for l in range(9):
                                 if (l!=j and l!=k):
                                     if (cells[rc[0],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[0],l)
                                         t=True
                                         cells[rc[0],l]=0
                                     if (cells[rc[1],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[1],l)
                                         t=True
                                         cells[rc[1],l]=0
         C[C[:,9]==i,:]=cells
@@ -445,15 +394,9 @@ def hiddenPairEr(C):       #Determine Hard (7)
                             for l in range(9):
                                 if (l!=j and l!=k):
                                     if (cells[rc[0],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[0],l)
                                         t=True
                                         cells[rc[0],l]=0
                                     if (cells[rc[1],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[1],l)
                                         t=True
                                         cells[rc[1],l]=0
         C[C[:,10]==i,:]=cells
@@ -476,15 +419,9 @@ def hiddenPairEr(C):       #Determine Hard (7)
                             for l in range(9):
                                 if (l!=j and l!=k):
                                     if (cells[rc[0],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[0],l)
                                         t=True
                                         cells[rc[0],l]=0
                                     if (cells[rc[1],l]!=0):
-                                        #print(cells)
-                                        #print(c)
-                                        #print(rc[1],l)
                                         t=True
                                         cells[rc[1],l]=0
         
@@ -530,24 +467,12 @@ def hiddenTupleEr(C):       #Determine Hard (8)
                                                 for n in range(9):
                                                     if (n!=j and n!=k and n!=l):
                                                         if (cells[rc[0],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[0],n)
                                                             t=True
                                                             cells[rc[0],n]=0
                                                         if (cells[rc[1],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[1],n)
                                                             t=True
                                                             cells[rc[1],n]=0
                                                         if (cells[rc[2],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[2],n)
                                                             t=True
                                                             cells[rc[2],n]=0
         C[C[:,9]==i,:]=cells
@@ -585,24 +510,12 @@ def hiddenTupleEr(C):       #Determine Hard (8)
                                                 for n in range(9):
                                                     if (n!=j and n!=k and n!=l):
                                                         if (cells[rc[0],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[0],n)
                                                             t=True
                                                             cells[rc[0],n]=0
                                                         if (cells[rc[1],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[1],n)
                                                             t=True
                                                             cells[rc[1],n]=0
                                                         if (cells[rc[2],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[2],n)
                                                             t=True
                                                             cells[rc[2],n]=0
         C[C[:,10]==i,:]=cells
@@ -640,24 +553,12 @@ def hiddenTupleEr(C):       #Determine Hard (8)
                                                 for n in range(9):
                                                     if (n!=j and n!=k and n!=l):
                                                         if (cells[rc[0],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[0],n)
                                                             t=True
                                                             cells[rc[0],n]=0
                                                         if (cells[rc[1],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[1],n)
                                                             t=True
                                                             cells[rc[1],n]=0
                                                         if (cells[rc[2],n]!=0):
-                                                            #print(cells)
-                                                            #print(j+1,k+1,l+1)
-                                                            #print(c)
-                                                            #print(rc[2],n)
                                                             t=True
                                                             cells[rc[2],n]=0
         C[C[:,11]==i+1,:]=cells
@@ -676,9 +577,8 @@ def XWingEr(C):                 #Determine very Hard (9)
             if (XWing):
                 break
             cells1=C[C[:,10]==i,:]
-            nrc1=cells1.shape[0]
-            if (nrc1==12):
-                continue
+            nrc1=cells1.shape
+            nrc1=nrc1[0]
             b1=cells1[:,j]
             rc1=[]
             if(b1[np.nonzero(b1)].size==2):
@@ -689,9 +589,8 @@ def XWingEr(C):                 #Determine very Hard (9)
                     if (XWing):
                         break
                     cells2=C[C[:,10]==k,:]
-                    nrc2=cells2.shape[0]
-                    if (nrc2==12):
-                        continue
+                    nrc2=cells2.shape
+                    nrc2=nrc2[0]
                     b2=cells2[:,j]
                     rc2=[]
                     if(b2[np.nonzero(b2)].size==2):
@@ -702,47 +601,26 @@ def XWingEr(C):                 #Determine very Hard (9)
                             XWing=True
                             cells3=C[C[:,9]==rc1[0],:]
                             cells4=C[C[:,9]==rc1[1],:]
-                            nrc3=cells3.shape[0]
-                            nrc4=cells4.shape[0]
+                            nrc3=cells3.shape
+                            nrc3=nrc3[0]
+                            nrc4=cells4.shape
+                            nrc4=nrc4[0]
                             for l in range(nrc1):
                                 if (cells1[l,j]!=0 and (cells1[l,9]!=rc1[0] and cells1[l,9]!=rc1[1])):
                                     print("Wrong in XWing! cells1")
-                                    #print(cells1)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells1[l,j]=0
                                     t=True
                             for l in range(nrc2):
                                 if (cells2[l,j]!=0 and (cells2[l,9]!=rc2[0] and cells2[l,9]!=rc2[1])):
                                     print("Wrong in XWing! cells2")
-                                    #print(cells2)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells2[l,j]=0
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,10]!=i and cells3[l,10]!=k)):
-                                   # print("cells3")
-                                    #print(cells3)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(l,j)
-                                    #print(A)
                                     cells3[l,j]=0
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,10]!=i and cells4[l,10]!=k)):
-                                   # print("cells4")
-                                    #print(cells4)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells4[l,j]=0
                                     t=True
                             C[C[:,9]==rc1[0],:]=cells3
@@ -756,9 +634,8 @@ def XWingEr(C):                 #Determine very Hard (9)
             if (XWing):
                 break
             cells1=C[C[:,9]==i,:]
-            nrc1=cells1.shape[0]
-            if (nrc1==12):
-               continue
+            nrc1=cells1.shape
+            nrc1=nrc1[0]
             b1=cells1[:,j]
             rc1=[]
             if(b1[np.nonzero(b1)].size==2):
@@ -769,9 +646,8 @@ def XWingEr(C):                 #Determine very Hard (9)
                     if (XWing):
                         break
                     cells2=C[C[:,9]==k,:]
-                    nrc2=cells2.shape[0]
-                    if (nrc2==12):
-                        continue
+                    nrc2=cells2.shape
+                    nrc2=nrc2[0]
                     b2=cells2[:,j]
                     rc2=[]
                     if(b2[np.nonzero(b2)].size==2):
@@ -782,47 +658,26 @@ def XWingEr(C):                 #Determine very Hard (9)
                             XWing=True
                             cells3=C[C[:,10]==rc1[0],:]
                             cells4=C[C[:,10]==rc1[1],:]
-                            nrc3=cells3.shape[0]
-                            nrc4=cells4.shape[0]
+                            nrc3=cells3.shape
+                            nrc3=nrc3[0]
+                            nrc4=cells4.shape
+                            nrc4=nrc4[0]
                             for l in range(nrc1):
                                 if (cells1[l,j]!=0 and (cells1[l,10]!=rc1[0] and cells1[l,10]!=rc1[1])):
                                     print("Wrong in XWing! cells1")
-                                    #print(cells1)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells1[l,j]=0
                                     t=True
                             for l in range(nrc2):
                                 if (cells2[l,j]!=0 and (cells2[l,10]!=rc2[0] and cells2[l,10]!=rc2[1])):
                                     print("Wrong in XWing! cells2")
-                                    #print(cells2)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells2[l,j]=0
                                     t=True
                             for l in range(nrc3):
                                 if (cells3[l,j]!=0 and (cells3[l,9]!=i and cells3[l,9]!=k)):
-                                    #print("cells3")
-                                    #print(cells3)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(l,j)
-                                    #print(A)
                                     cells3[l,j]=0
                                     t=True
                             for l in range(nrc4):
                                 if (cells4[l,j]!=0 and (cells4[l,9]!=i and cells4[l,9]!=k)):
-                                   # print("cells4")
-                                    #print(cells4)
-                                    #print(i,k)
-                                    #print(rc1[0],rc1[1])
-                                    #print(j)
-                                    #print(A)
                                     cells4[l,j]=0
                                     t=True
                             C[C[:,10]==rc1[0],:]=cells3
@@ -830,7 +685,6 @@ def XWingEr(C):                 #Determine very Hard (9)
                     C[C[:,9]==k,:]=cells2
             C[C[:,9]==i,:]=cells1
     
-    #print(t)
     return C, t
 #----------------------------------------------------------
 
@@ -838,7 +692,8 @@ def XWingEr(C):                 #Determine very Hard (9)
 #----------------------------------------------------------
 def SwordFishEr(C):    #Determine very Hard (10)
     t=False
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     for j in range(9):
         swfish=False
         for i in range(9):
@@ -846,49 +701,35 @@ def SwordFishEr(C):    #Determine very Hard (10)
                 break
             cells1=C[C[:,9]==i,:]
             b1=cells1[:,j]
-            cols1=[]
             path=np.arange(2)
             if(b1[np.nonzero(b1)].size==2):
                 c1=cells1[b1!=0,:]
                 path=np.vstack([path,c1[0,9:11]])
                 path=np.vstack([path,c1[1,9:11]])
                 path=np.delete(path,0,0)
-                cols1.append(c1[0,10])
-                cols1.append(c1[1,10])
                 for k in xrange(i+1,9,1):
                     if (swfish):
                         break
                     cells2=C[C[:,9]==k,:]
                     b2=cells2[:,j]
-                    cols2=[]
                     if(b2[np.nonzero(b2)].size==2):
                         c2=cells2[b2!=0,:]
                         path=np.vstack([path,c2[0,9:11]])
                         path=np.vstack([path,c2[1,9:11]])
-                        cols2.append(c2[0,10])
-                        cols2.append(c2[1,10])
                         for l in xrange(k+1,9,1):
                             if (swfish):
                                 break
                             cells3=C[C[:,9]==l,:]
                             b3=cells3[:,j]
-                            cols3=[]
                             if(b3[np.nonzero(b3)].size==2):
                                 c3=cells3[b3!=0,:]
-                                #print(c3)
                                 path=np.vstack([path,c3[0,9:11]])
                                 path=np.vstack([path,c3[1,9:11]])
-                                cols3.append(c3[0,10])
-                                cols3.append(c3[1,10])
                                 rows, cols, isP=isPath(path)
                                 if (isP):
                                     for n in range(nrows):
                                         if ( (C[n,10] in cols) and (C[n,9] not in rows) ):
                                             if (C[n,j]!=0):
-                                                #print(path)
-                                                #print(rows)
-                                                #print(cols)
-                                                #print(n,j)
                                                 t=True
                                                 swfish=True
                                                 C[n,j]=0
@@ -900,50 +741,35 @@ def SwordFishEr(C):    #Determine very Hard (10)
                 break
             cells1=C[C[:,10]==i,:]
             b1=cells1[:,j]
-            rows1=[]
             path=np.arange(2)
             if(b1[np.nonzero(b1)].size==2):
                 c1=cells1[b1!=0,:]
                 path=np.vstack([path,c1[0,9:11]])
                 path=np.vstack([path,c1[1,9:11]])
                 path=np.delete(path,0,0)
-                rows1.append(c1[0,9])
-                rows1.append(c1[1,9])
                 for k in xrange(i+1,9,1):
                     if (swfish):
                         break
                     cells2=C[C[:,10]==k,:]
                     b2=cells2[:,j]
-                    rows2=[]
                     if(b2[np.nonzero(b2)].size==2):
                         c2=cells2[b2!=0,:]
                         path=np.vstack([path,c2[0,9:11]])
                         path=np.vstack([path,c2[1,9:11]])
-                        rows2.append(c2[0,9])
-                        rows2.append(c2[1,9])
                         for l in xrange(k+1,9,1):
                             if (swfish):
                                 break
                             cells3=C[C[:,10]==l,:]
                             b3=cells3[:,j]
-                            rows3=[]
                             if(b3[np.nonzero(b3)].size==2):
                                 c3=cells3[b3!=0,:]
-                                #print(c3)
                                 path=np.vstack([path,c3[0,9:11]])
                                 path=np.vstack([path,c3[1,9:11]])
-                                rows3.append(c3[0,10])
-                                rows3.append(c3[1,10])
                                 rows, cols, isP=isPath(path)
                                 if (isP):
                                     for n in range(nrows):
                                         if ( (C[n,9] in rows) and (C[n,10] not in cols) ):
                                             if (C[n,j]!=0):
-                                                #print(path)
-                                                #print(rows)
-                                                #print(cols)
-                                                #print(n,j)
-                                                #print(C)
                                                 t=True
                                                 swfish=True
                                                 C[n,j]=0
@@ -983,7 +809,8 @@ def isPath(path):
 
 
 def clearC(C,row,col,nbox,num):
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     for i in range(nrows):
         if (C[i,9]==row or C[i,10]==col or C[i,11]==nbox):
             C[i,num-1]=0
@@ -994,7 +821,8 @@ def FindMinRow(C):
     row=0
     arr=C[row,0:9]
     mini=arr[np.nonzero(arr)].size
-    nrows=C.shape[0]
+    nrows=C.shape
+    nrows=nrows[0]
     for i in range(nrows-1):
         arr=C[i+1,0:9]
         if (mini>arr[np.nonzero(arr)].size):

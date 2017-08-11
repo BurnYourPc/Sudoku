@@ -1,5 +1,6 @@
 import numpy as np
 from copy import deepcopy
+import time
 from src.utils import SolverUtils as SV
 from src.utils import GeneratorUtils as GU
 from src.checkers import SudoCheck as SC
@@ -11,7 +12,12 @@ def GenerateProb(lb,ub,sym):
     if sym>0:
         return GenSymmetrical(sym)
     Known = randint(lb,ub)
-    return RandGenerator3([],Known,1,[])
+    
+    while(True):
+        A= RandGeneratorTimLim([],Known,1,[],0)
+        if (A[0][0]!=-1):
+	        return A
+    #return RandGenerator3([],Known,1,[])    #no time limit
 
 
 def RandGenerator(A,Known,n):    #Top-down - No simulated annealing
@@ -40,40 +46,41 @@ def RandGenerator(A,Known,n):    #Top-down - No simulated annealing
         return Arec
 
 
-def RandGenerator2(A,Known,n):   #almost useless
+def RandGeneratorTimLim(A,Known,n,Abeg,tim):   #Top-dowm, simulated annealing with time limit
     Arec=deepcopy(A)
+    start2=time.time()
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)
-        return RandGenerator2(Arec,Known,2)
+        start=time.time()
+        return RandGeneratorTimLim(Arec,Known,2,Arec,0)
     else:
-        print(Arec)
+        if (time.time()-start2+tim>15):
+            #print("time limit exceed: ", time.time()-start2+tim)
+            Arec[0][0]=-1
+            return Arec
         pos2erase=np.array(np.where(Arec!=0))
         lenPos=pos2erase[0,:].size
-        print(lenPos)
         if (lenPos==Known):
             return Arec
-        if (Known<24):
-            if (lenPos==24):
-                r=randint(1, 10)
-                print(r)
-                if (r==1 or r==2):
-                    print("done24")
-                    Crec=SV.ConstructC(Arec)
-                    Arec, Crec, DidIn = SV.SudoInput1(Arec,Crec)
-                    Arec, Crec, DidIn = SV.SudoInput2(Arec,Crec)
-            elif(lenPos==25):
-                r=randint(1, 10)
-                if (r==1):
-                    print("done25")
-                    Crec=SV.ConstructC(Arec)
-                    Arec, Crec, DidIn = SV.SudoInput1(Arec,Crec)
-                    Arec, Crec, DidIn = SV.SudoInput2(Arec,Crec)
+        if (lenPos<27):
+            p=(lenPos)/(81*2)
+            x=np.random.uniform(0.0,1.0)
+            if (x<=p):
+                for i in range(2):
+                    pos2fill=np.array(np.where(Arec==0))
+                    lenFill=pos2fill[0,:].size
+                    pick=randint(0, lenFill-1)
+                    Arec[pos2fill[0,pick],pos2fill[1,pick]]=Abeg[pos2fill[0,pick],pos2fill[1,pick]]
+                pos2erase=np.array(np.where(Arec!=0))
+                lenPos=pos2erase[0,:].size
         while (lenPos>0):
             A3=deepcopy(Arec)
             pick=randint(0, lenPos-1)
             A3[pos2erase[0,pick],pos2erase[1,pick]]=0
             if (GU.CountSolutions(A3,[],0,1)==1):
-                A2=RandGenerator2(A3,Known,2)
+                A2=RandGeneratorTimLim(A3,Known,2,Abeg,time.time()-start2+tim)
+                if (A2[0][0]==-1):
+                    return A2
                 lenKn=np.array(np.where(A2!=0))
                 if(lenKn[0,:].size==Known):
                     return A2
@@ -82,7 +89,7 @@ def RandGenerator2(A,Known,n):   #almost useless
         return Arec
 
 
-def RandGenerator3(A,Known,n,Abeg):   #Top-down with Simulated Annealing
+def RandGenerator3(A,Known,n,Abeg):   #Top-down with Simulated Annealing no time limit
     Arec=deepcopy(A)
     if (n==1):
         Arec=GU.makeNewSudo(np.zeros((9,9), dtype=int),1)

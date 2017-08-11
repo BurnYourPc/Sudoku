@@ -12,40 +12,59 @@ from src.solver import solver as SL
 
 
 def gen_save(num,sym,sourceimg,destination):
+    num1=0
+    num2=0
+    num3=0
+    num4=0
+    num5=0
     if (sym):
         for i in range(num):
             A=Gen.GenerateProb(0,0,i%11+1)
             lvl=RT.RateProb(A)
+            print(i+1)
             if (lvl==1):
                 destination2=destination+"VeryEasy"
+                num1=num1+1
             elif (lvl==2):
                 destination2=destination+"Easy"
+                num2=num2+1
             elif (lvl==3):
                 destination2=destination+"Medium"
+                num3=num3+1
             elif (lvl==4):
                 destination2=destination+"Hard"
+                num4=num4+1
             else:
                 destination2=destination+"VeryHard"
+                num5=num5+1
             
             BS.CreateSudoImg(A,sourceimg,destination2)
     
     else:
         for i in range(num):
-            A=Gen.GenerateProb(24,34,0)          # 24 to 32 knokn cells
+            A=Gen.GenerateProb(22,32,0)          # 22 to 32 knokn cells
             lvl=RT.RateProb(A)
             print(i+1)
             if (lvl==1):
                 destination2=destination+"VeryEasy"
+                num1=num1+1
             elif (lvl==2):
                 destination2=destination+"Easy"
+                num2=num2+1
             elif (lvl==3):
                 destination2=destination+"Medium"
+                num3=num3+1
             elif (lvl==4):
                 destination2=destination+"Hard"
+                num4=num4+1
             else:
                 destination2=destination+"VeryHard"
+                num5=num5+1
             
             BS.CreateSudoImg(A,sourceimg,destination2)
+    
+    print(" ")
+    print(num1,"very Easy, ",num2,"Easy, ",num3,"Medium, ",num4,"Hard and ",num5,"very Hard sudoku generated")
 
 
 def CreatePdf(nums,sym,path):
