@@ -26,7 +26,7 @@ Our main Generator uses a Top-Down technique with a Simulated Annealing variant 
 
 That proccess can efficiently generate sudoku problems with 25-24 known cells, but not less. So we added a simulated annealing technique. That is: In each step we define a probability p(n) ( n is the number of known cells in each step and if n1 <= n2 then p(n1) <= p(n2) ) that the generator would fill 2 cells at random. So this way we can exceed the local optimums (from the point of view of grid's structure) and generate sudoku problems even with 21 known cells (or even 20 but it's slow). The parametrs of the simulated annealing may take improvement.
 
-In practice it's more convenient to generate sudoku from 22 to 32 cell known at most. So when you choose to generate sudoku problems you have to give the number of problems you desire to be generated. Then for each new sudoku problem the generator chooses a random number k between 22 and 32 and generates a grid with k known cells.
+In practice it's more convenient to generate sudoku from 22 to 32 cell known at most. So when you choose to generate sudoku problems you have to give the number of problems you want to be generated. Then for each new sudoku problem the generator chooses a random number, k, between 22 and 32 and generates a grid with k known cells.
 
 Moreover we set time limit (15 sec.) for a sudoku problem to be generated, for better time efficient in practise. If the time limit is violated then a new full solved grid is generated and we repeat the proccess. You can use the time limitless generator if you want.
 
